@@ -7,6 +7,7 @@ namespace Greatkhanjoy\Complete\Admin;
  */
 class Menu
 {
+    const slug = 'greatkhanjoy-complete'; // slug and text domain
     /**
      * class constructor
      */
@@ -22,14 +23,13 @@ class Menu
      */
     public function admin_menu()
     {
-        $parent_slug = 'greatkhanjoy-complete';
         $capability = 'manage_options';
 
-        add_menu_page(__('Greatkhanjoy Complete', 'greatkhanjoy-complete'), __('Greatkhanjoy Complete', 'greatkhanjoy-complete'), $capability, $parent_slug, [$this, 'plugin_page'], 'dashicons-admin-generic');
+        add_menu_page(__('Greatkhanjoy Complete', self::slug), __('Greatkhanjoy Complete', self::slug), $capability, self::slug, [$this, 'plugin_page'], 'dashicons-admin-generic');
 
-        add_submenu_page($parent_slug, __('General', 'greatkhanjoy-complete'), __('General', 'greatkhanjoy-complete'), $capability, $parent_slug, [$this, 'plugin_page']);
+        add_submenu_page(self::slug, __('General', self::slug), __('General', self::slug), $capability, self::slug, [$this, 'plugin_page']);
 
-        add_submenu_page($parent_slug, __('Settings', 'greatkhanjoy-complete'), __('Settings', 'greatkhanjoy-complete'), $capability, 'greatkhanjoy-complete-settings', [$this, 'plugin_page_settings']);
+        add_submenu_page(self::slug, __('Settings', self::slug), __('Settings', self::slug), $capability, 'greatkhanjoy-complete-settings', [$this, 'plugin_page_settings']);
     }
 
     /**

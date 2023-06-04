@@ -9,6 +9,7 @@
  * Author URI: https://greatkhanjoy.me
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: greatkhanjoy-complete
  */
 
 // Exit if accessed directly.
@@ -30,6 +31,7 @@ final class Greatkhanjoy_Complete
      * @var string
      */
     const version = '1.0.0';
+    const prefix = 'greatkhanjoy-complete'; // prefix, slug and text domain
 
     /**
      * class constructor
@@ -77,6 +79,7 @@ final class Greatkhanjoy_Complete
      */
     public function init_plugin()
     {
+        new Greatkhanjoy\Complete\Assets();
         if (is_admin()) {
             new Greatkhanjoy\Complete\Admin();
         } else {
@@ -92,12 +95,12 @@ final class Greatkhanjoy_Complete
     public function activate()
     {
 
-        $installed = get_option('greatkhanjoy_complete_installed');
+        $installed = get_option(self::prefix . '-installed');
 
         if (!$installed) {
-            update_option('greatkhanjoy_complete_installed', time());
+            update_option(self::prefix . '-installed', time());
         }
-        update_option('greatkhanjoy_complete_version', GREATKHANJOY_COMPLETE_VERSION);
+        update_option(self::prefix . '-version', GREATKHANJOY_COMPLETE_VERSION);
     }
 }
 
