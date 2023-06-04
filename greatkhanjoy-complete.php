@@ -80,6 +80,7 @@ final class Greatkhanjoy_Complete
     public function init_plugin()
     {
         new Greatkhanjoy\Complete\Assets();
+        new Greatkhanjoy\Complete\Api();
         if (is_admin()) {
             new Greatkhanjoy\Complete\Admin();
         } else {

@@ -7,7 +7,7 @@ namespace Greatkhanjoy\Complete\Admin;
  */
 class Menu
 {
-    const slug = 'greatkhanjoy-complete'; // slug and text domain
+    const slug = 'greatkhanjoy-complete'; // prefix,slug and text domain
     /**
      * class constructor
      */
@@ -25,11 +25,29 @@ class Menu
     {
         $capability = 'manage_options';
 
-        add_menu_page(__('Greatkhanjoy Complete', self::slug), __('Greatkhanjoy Complete', self::slug), $capability, self::slug, [$this, 'plugin_page'], 'dashicons-admin-generic');
+        $hook = add_menu_page(__('Greatkhanjoy Complete', self::slug), __('Greatkhanjoy Complete', self::slug), $capability, self::slug, [$this, 'plugin_page'], 'dashicons-admin-generic');
 
         add_submenu_page(self::slug, __('General', self::slug), __('General', self::slug), $capability, self::slug, [$this, 'plugin_page']);
 
         add_submenu_page(self::slug, __('Settings', self::slug), __('Settings', self::slug), $capability, 'greatkhanjoy-complete-settings', [$this, 'plugin_page_settings']);
+
+        add_action('admin_head-' . $hook, [$this, 'enqueue_assets']);
+    }
+
+    /**
+     * Enqueue admin assets
+     *
+     * @return void
+     */
+    public function enqueue_assets()
+    {
+        wp_enqueue_script(self::slug . '-admin-script');
+        wp_enqueue_style(self::slug . '-admin-style');
+
+        wp_localize_script(self::slug . '-admin-script', self::slug, array(
+            'api_url' => esc_url_raw(rest_url()),
+            'nonce' => wp_create_nonce('wp_rest')
+        ));
     }
 
     /**
@@ -39,7 +57,7 @@ class Menu
      */
     public function plugin_page()
     {
-        echo 'Hello World';
+        echo '<h2 class="plugin-heading">Plugin page</h2>';
     }
 
     /**

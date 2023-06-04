@@ -14,18 +14,55 @@ class Assets
      */
     function __construct()
     {
-        add_action('wp_enqueue_scripts', [$this, 'frontend_assets']);
-        add_action('admin_enqueue_scripts', [$this, 'admin_assets']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
     }
 
-    public function frontend_assets()
+    public function get_scripts()
     {
-        wp_enqueue_script(self::prefix . '-script', GREATKHANJOY_COMPLETE_ASSETS . '/frontend.js', false, filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/frontend.js'), true);
+        return [
+            self::prefix . '-script' => [
+                'src' => GREATKHANJOY_COMPLETE_ASSETS . '/frontend.js',
+                'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/frontend.js'),
+                'footer' => true
+            ],
+            self::prefix . '-admin-script' => [
+                'src' => GREATKHANJOY_COMPLETE_ASSETS . '/index.js',
+                'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/index.js'),
+                'footer' => true
+            ]
+        ];
     }
 
-    public function admin_assets()
+    public function get_styles()
     {
-        wp_enqueue_script(self::prefix . '-admin-script', GREATKHANJOY_COMPLETE_ASSETS . '/index.js', false, filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/index.js'), true);
-        wp_enqueue_style(self::prefix . '-admin-style', GREATKHANJOY_COMPLETE_ASSETS . '/index.css', false, filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/index.css'));
+        return [
+            self::prefix . '-style' => [
+                'src' => GREATKHANJOY_COMPLETE_ASSETS . '/frontend.css',
+                'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/frontend.css'),
+                'footer' => false
+            ],
+            self::prefix . '-admin-style' => [
+                'src' => GREATKHANJOY_COMPLETE_ASSETS . '/index.css',
+                'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/index.css'),
+                'footer' => false
+            ]
+        ];
+    }
+
+    public function enqueue_assets()
+    {
+        $scripts = $this->get_scripts();
+        $styles = $this->get_styles();
+
+        foreach ($scripts as $handle => $script) {
+            $deps = isset($script['deps']) ? $script['deps'] : false;
+            wp_register_script($handle, $script['src'], $deps, $script['version'], $script['footer']);
+        }
+
+        foreach ($styles as $handle => $style) {
+            $deps = isset($style['deps']) ? $style['deps'] : false;
+            wp_register_style($handle, $style['src'], $deps, $style['version'], $style['footer']);
+        }
     }
 }
