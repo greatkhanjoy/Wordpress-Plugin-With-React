@@ -1,0 +1,19 @@
+{
+    "name": "greatkhanjoy/greatkhanjoy-complete",
+    "description": "A quickstart plugin for WordPress",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Greatkhanjoy\\Complete\\": "inc/"
+        },
+        "files": []
+    },
+    "authors": [
+        {
+            "name": "Imran Hosein Khan JOY"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
