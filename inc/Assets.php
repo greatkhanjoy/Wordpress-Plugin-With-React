@@ -24,12 +24,14 @@ class Assets
             self::prefix . '-script' => [
                 'src' => GREATKHANJOY_COMPLETE_ASSETS . '/frontend.js',
                 'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/frontend.js'),
-                'footer' => true
+                'footer' => false,
+                'deps' => ['wp-i18n', 'wp-element']
             ],
             self::prefix . '-admin-script' => [
                 'src' => GREATKHANJOY_COMPLETE_ASSETS . '/index.js',
                 'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/index.js'),
-                'footer' => true
+                'footer' => false,
+                'deps' => ['wp-i18n', 'wp-plugins', 'wp-edit-post', 'wp-element']
             ]
         ];
     }
@@ -40,7 +42,7 @@ class Assets
             self::prefix . '-style' => [
                 'src' => GREATKHANJOY_COMPLETE_ASSETS . '/frontend.css',
                 'version' => filemtime(GREATKHANJOY_COMPLETE_PATH . '/assets/frontend.css'),
-                'footer' => false
+                'footer' => false,
             ],
             self::prefix . '-admin-style' => [
                 'src' => GREATKHANJOY_COMPLETE_ASSETS . '/index.css',
@@ -57,12 +59,12 @@ class Assets
 
         foreach ($scripts as $handle => $script) {
             $deps = isset($script['deps']) ? $script['deps'] : false;
-            wp_register_script($handle, $script['src'], $deps, $script['version'], $script['footer']);
+            wp_register_script($handle, $script['src'], $deps, $script['version']);
         }
 
         foreach ($styles as $handle => $style) {
             $deps = isset($style['deps']) ? $style['deps'] : false;
-            wp_register_style($handle, $style['src'], $deps, $style['version'], $style['footer']);
+            wp_register_style($handle, $style['src'], $deps, $style['version']);
         }
     }
 }

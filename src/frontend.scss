@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menu-container {
+  @apply translate-y-[200%] transition-all duration-300 ease-in-out;
+}
+
+.menu-container.open {
+  @apply translate-y-0;
+}
+
+.floating-button.open {
+  transform: translateY(-50%);
+}

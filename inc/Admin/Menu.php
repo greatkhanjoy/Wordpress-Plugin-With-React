@@ -57,7 +57,7 @@ class Menu
      */
     public function plugin_page()
     {
-        echo '<h2 class="plugin-heading">Plugin page</h2>';
+        echo '<div class="wrap" id="' . self::slug . '-render"></div>';
     }
 
     /**
