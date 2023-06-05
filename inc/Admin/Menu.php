@@ -29,7 +29,9 @@ class Menu
 
         add_submenu_page(self::slug, __('General', self::slug), __('General', self::slug), $capability, self::slug, [$this, 'plugin_page']);
 
-        add_submenu_page(self::slug, __('Settings', self::slug), __('Settings', self::slug), $capability, 'greatkhanjoy-complete-settings', [$this, 'plugin_page_settings']);
+        add_submenu_page(self::slug, __('Settings', self::slug), __('Settings', self::slug), $capability, self::slug . '#/settings', [$this, 'plugin_page_settings']);
+
+        add_submenu_page(self::slug, __('License', self::slug), __('License', self::slug), $capability, self::slug . '#/license', [$this, 'plugin_page_settings']);
 
         add_action('admin_head-' . $hook, [$this, 'enqueue_assets']);
     }
